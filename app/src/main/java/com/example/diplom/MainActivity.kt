@@ -79,6 +79,7 @@ var storages = mutableStateListOf<StorageInfo>()
 var accounts = mutableListOf<GoogleSignInAccount>()
 var driveServices = mutableListOf<Drive>()
 class MainActivity : ComponentActivity() {
+    val database by lazy { AppDatabase.getDatabase(this) } // БД
     private lateinit var googleAuthHelper: GoogleAuthHelper
     private lateinit var dropboxAuthHelper: DropboxAuthHelper
     private val signInLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
