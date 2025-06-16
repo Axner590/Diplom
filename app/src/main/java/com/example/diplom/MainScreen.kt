@@ -82,6 +82,7 @@ var Files = mutableStateListOf<File>()
 @Composable
 fun FilesList(modifier: Modifier = Modifier){
     val storage by currentStorage
+    val Files by navigator.currentFiles
     val context = LocalContext.current
     if(currentStorage.value != null) checkNavigatorExists(currentStorage.value!!)
     val filesList = remember { childrenFiles}

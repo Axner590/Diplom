@@ -24,7 +24,7 @@ var accounts = mutableListOf<GoogleSignInAccount>()
 var driveServices = mutableListOf<Drive>()
 class MainApplication : Application() {
     // БД
-    val database by lazy { AppDatabase.getDatabase(this) }
+    val database by lazy { AppDatabase.create(this) }
 
     fun checkForPermissions(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {

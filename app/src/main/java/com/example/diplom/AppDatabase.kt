@@ -5,24 +5,25 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import android.content.Context
 
-@Database(entities = [FileEntity::class], version = 1)
+
+@Database(
+    entities = [FileEntity::class, StorageEntity::class],
+    version = 1, // Начинаем с версии 1
+    exportSchema = false // Если не нужна документация схемы
+)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun fileDao(): FileDao
+    abstract fun storageDao(): StorageDao
 
     companion object {
-        @Volatile
-        private var INSTANCE: AppDatabase? = null
-
-        fun getDatabase(context: Context): AppDatabase {
-            return INSTANCE ?: synchronized(this) {
-                val instance = Room.databaseBuilder(
-                    context.applicationContext,
-                    AppDatabase::class.java,
-                    "file_database"
-                ).build()
-                INSTANCE = instance
-                instance
-            }
+        fun create(context: Context): AppDatabase {
+            return Room.databaseBuilder(
+                context.applicationContext,
+                AppDatabase::class.java,
+                "file_manager.db"
+            )
+                .fallbackToDestructiveMigration()
+                .build()
         }
     }
 }
