@@ -76,17 +76,16 @@ fun MainScreen(drawerStateBool: DrawerState, coroutineScope: CoroutineScope){
     )
 }
 
-// Обновление переменной происходит в навигаторах
-var childrenFiles = mutableStateListOf<FileData>()
+val navigator = FileSystemNavigator()
+var Files = mutableStateListOf<File>()
 @OptIn(DelicateCoroutinesApi::class)
 @Composable
 fun FilesList(modifier: Modifier = Modifier){
     val storage by currentStorage
     val context = LocalContext.current
     if(currentStorage.value != null) checkNavigatorExists(currentStorage.value!!)
-    // Достаем текущие файлы на пути, преобразуя их в FileData
     val filesList = remember { childrenFiles}
-    val backButton = FileData("back_button")
+    val backButton = File("...")
     val childrenFoldersWithBackButton = listOf(backButton) + filesList
     LazyColumn(modifier = modifier){
         items(childrenFoldersWithBackButton) { file ->

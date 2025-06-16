@@ -4,12 +4,28 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
+import androidx.room.Delete
 import kotlinx.coroutines.flow.Flow
+
+@Dao
+interface StorageDao {
+    @Insert
+    suspend fun insert(storage: StorageEntity): Long
+
+    @Query("SELECT * FROM storages WHERE id = :id")
+    suspend fun getById(id: Int): StorageEntity?
+
+    @Query("SELECT * FROM storages")
+    fun getAll(): Flow<List<StorageEntity>>
+
+    @Delete
+    suspend fun delete(storage: StorageEntity)
+}
 
 @Dao
 interface FileDao {
     @Insert
-    suspend fun insert(file: FileEntity)
+    suspend fun insert(file: FileEntity): Long
 
     @Update
     suspend fun update(file: FileEntity)
