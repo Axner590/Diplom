@@ -75,11 +75,8 @@ import java.io.File
 import kotlin.system.exitProcess
 
 
-var storages = mutableStateListOf<StorageInfo>()
-var accounts = mutableListOf<GoogleSignInAccount>()
-var driveServices = mutableListOf<Drive>()
+
 class MainActivity : ComponentActivity() {
-    val database by lazy { AppDatabase.getDatabase(this) } // БД
     private lateinit var googleAuthHelper: GoogleAuthHelper
     private lateinit var dropboxAuthHelper: DropboxAuthHelper
     private val signInLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -118,11 +115,6 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        // Checking permissions for android 10+
-        checkForPermissions()
-        googleAuthHelper = GoogleAuthHelper(this, signInLauncher)
-        dropboxAuthHelper = DropboxAuthHelper(this)
-        checkForStorages()
         setContent {
             DiplomTheme {
                 Drawer(
